@@ -1,2 +1,2 @@
-python-unsplash==1.0.1
 sanic==0.7.0
+sanic-json==0.1.2

@@ -1,11 +1,13 @@
 from sanic import Sanic
-from sanic_json import get_json_route
-from api.random import random_pohoto
+from sanic_json import get_json_route, add_route
+from api.random import random_pohoto, index, random_photo_html
 
 app = Sanic()
 json_route = get_json_route(app)
 
 json_route("/api/random", random_pohoto)
+json_route("/random", random_photo_html)
+json_route("/", index)
 
 
 if __name__ == "__main__":

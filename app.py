@@ -1,4 +1,4 @@
-from sanic import Sanic
+from sanic import Sanic, response
 from sanic_json import get_json_route, add_route
 from api.photo import (
     random_pohoto,

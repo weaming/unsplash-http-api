@@ -1,3 +1,4 @@
+import logging
 from sanic import response
 from .unsplash_api import api
 from .to_json import obj_to_dict
@@ -5,8 +6,11 @@ from .to_json import obj_to_dict
 allowed_order_type = ["latest", "oldest", "popular"]
 
 
-async def random_pohoto(req, count=10):
-    res = api.photo.random(count=count)
+async def random_pohoto(req, count=10, username=None, query=None):
+    """
+    :param count: The number of photos to return. (Default: 1; max: 30)
+    """
+    res = api.photo.random(count=count, username=username, query=query)
     return {"data": obj_to_dict(res)}
 
 
@@ -18,8 +22,8 @@ async def random_photo_html(req):
         if isinstance(location, dict):
             location = location["title"]
     except KeyError as e:
-        print(e)
-        print(res)
+        logging.warning(str(e))
+        logging.warning(res)
         location = "unknown location"
 
     html = (

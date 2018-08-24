@@ -6,6 +6,7 @@ from api.photo import (
     all_photo,
     curated_photo,
     get_photo,
+    search_photo,
 )
 
 app = Sanic()
@@ -16,10 +17,11 @@ async def index(req):
     return response.redirect("/random")
 
 
-json_route("/api/random", random_pohoto)
-json_route("/api/all", all_photo)
-json_route("/api/curated", curated_photo)
-json_route("/api/get", get_photo)
+json_route("/api/photo/random", random_pohoto)
+json_route("/api/photo/all", all_photo)
+json_route("/api/photo/curated", curated_photo)
+json_route("/api/photo/get", get_photo)
+json_route("/api/photo/search", search_photo)
 json_route("/random", random_photo_html)
 json_route("/", index)
 

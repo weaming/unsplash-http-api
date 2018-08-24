@@ -50,3 +50,8 @@ async def curated_photo(req, page=1, per_page=10, order_by="latest"):
 async def get_photo(req, id):
     res = api.photo.get(id)
     return {"data": obj_to_dict(res)}
+
+
+async def search_photo(req, query, page=1, per_page=10):
+    res = api.search.photos(query, page=page, per_page=per_page)
+    return {"data": obj_to_dict(res)}

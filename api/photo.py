@@ -2,6 +2,7 @@ from sanic import response
 from .unsplash_api import api
 from .to_json import obj_to_dict
 
+allowed_order_type = ["latest", "oldest", "popular"]
 
 
 async def random_pohoto(req, count=10):
@@ -30,5 +31,22 @@ async def random_photo_html(req):
     return response.html(html.format(url=url, location=location))
 
 
-async def index(req):
-    return response.redirect("/random")
+async def all_photo(req, page=1, per_page=10, order_by="latest"):
+    if order_by not in allowed_order_type:
+        return {"reason": "allowed order_by values {}".format(allowed_order_type)}, 400
+
+    res = api.photo.all(page=page, per_page=per_page, order_by=order_by)
+    return {"data": obj_to_dict(res)}
+
+
+async def curated_photo(req, page=1, per_page=10, order_by="latest"):
+    if order_by not in allowed_order_type:
+        return {"reason": "allowed order_by values {}".format(allowed_order_type)}, 400
+
+    res = api.photo.curated(page=page, per_page=per_page, order_by=order_by)
+    return {"data": obj_to_dict(res)}
+
+
+async def get_photo(req, id):
+    res = api.photo.get(id)
+    return {"data": obj_to_dict(res)}

@@ -1,7 +1,9 @@
 import logging
+
 from sanic import response
 from .unsplash_api import api
 from .to_json import obj_to_dict
+from .helpers import http_get
 
 allowed_order_type = ["latest", "oldest", "popular"]
 
@@ -14,8 +16,15 @@ async def random_pohoto(req, count=10, username=None, query=None):
     return {"data": obj_to_dict(res)}
 
 
-async def random_photo_html(req):
+async def random_photo_html(req, webp=False):
     res = obj_to_dict(api.photo.random(count=1))[0]
+    if webp:
+        url = res["urls"]["regular"]
+
+        # webp
+        binary = await http_get(url.replace("fm=jpg", "fm=webp"))
+        return response.raw(binary, content_type="image/webp")
+
     url = res["urls"]["raw"]
     try:
         location = res["location"]

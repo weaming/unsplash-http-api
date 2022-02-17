@@ -1,4 +1,4 @@
-sanic==0.7.0
+sanic==20.12.6
 sanic-json==0.1.13
 python-unsplash==1.0.1
 aiohttp==3.5.4
